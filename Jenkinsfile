@@ -13,6 +13,9 @@ pipeline {
         stage('Test in Parallel') {
             parallel{
                 stage('Unit Tests') {
+                    when {
+                        expression { currentBuild.currentResult == 'SUCCESS' }
+                    }
                     steps {
                         echo 'Running unit tests...'
                         sh 'sleep 5'
@@ -26,12 +29,6 @@ pipeline {
                 }
             }
         }
-        // stage('Test') {
-        //     steps {
-        //         sh 'echo "All tests passed!" > result.txt'
-        //         archiveArtifacts artifacts: 'result.txt', fingerprint: true
-        //     }
-        // }
         stage('Approval') {
             steps {
                 input "Do you want to proceed with deployment?"
