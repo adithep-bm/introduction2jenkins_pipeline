@@ -13,7 +13,7 @@ pipeline {
             }
         }
         stage('Test in Parallel') {
-            parallel{
+            parallel {
                 stage('Unit Tests') {
                     when {
                         expression { return params.BUILD_SUCCESS }
@@ -31,7 +31,24 @@ pipeline {
                 }
             }
         }
+        stage('Simulate testing') {
+            parallel {
+                state('Linux') {
+                    steps {
+                        echo 'Simulating tests on Linux...'
+                        sh 'sleep 5'
+                    }
+                }
+                state('Windows') {
+                    steps {
+                        echo 'Simulating tests on Windows...'
+                        sh 'sleep 5'
+                    }
+                }
+            }
+        }
         stage('Approval') {
+            timeout(time: 1, unit: 'SECONDS')
             steps {
                 input "Do you want to proceed with deployment?"
             }
