@@ -3,6 +3,8 @@ pipeline {
     parameters {
          booleanParam(name: 'BUILD_SUCCESS', defaultValue: false, 
          description: 'Is Build successfully?')
+         choice(name: 'ENVIRONMENT', choices: ['dev', 'staging', 'prod'], 
+         description: 'Select the deployment environment')
     }
     stages {
         stage('Build') {
@@ -36,7 +38,7 @@ pipeline {
         }
         stage('Deploy') {
             steps{
-                echo 'Deploying application...'
+                echo "Deploying application to environment: ${params.ENVIRONMENT}"
             }
         }
     }
