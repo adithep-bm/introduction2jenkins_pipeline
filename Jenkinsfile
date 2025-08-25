@@ -9,7 +9,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building application...'
-                sh 'BUILD_SUCCESSFULLY = true'
+                sh 'params.BUILD_SUCCESSFULLY = true'
             }
         }
         stage('Test in Parallel') {
