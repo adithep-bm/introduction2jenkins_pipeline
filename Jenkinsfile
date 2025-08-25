@@ -1,6 +1,7 @@
 pipeline {
     agent any
     parameters {
+        booleanParam(name: 'BUILD_SUCCESSFULLY')
         booleanParam(name: 'RUN_DEPLOY', defaultValue: false, 
         description: 'Should we deploy?')
     }
@@ -8,9 +9,13 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building application...'
+                sh 'BUILD_SUCCESSFULLY = true'
             }
         }
         stage('Test in Parallel') {
+            when {
+                expression { return params.BUILD_SUCCESSFULLY }
+            }
             parallel{
                 stage('Unit Tests') {
                     steps {
@@ -26,12 +31,12 @@ pipeline {
                 }
             }
         }
-        stage('Test') {
-            steps {
-                sh 'echo "All tests passed!" > result.txt'
-                archiveArtifacts artifacts: 'result.txt', fingerprint: true
-            }
-        }
+        // stage('Test') {
+        //     steps {
+        //         sh 'echo "All tests passed!" > result.txt'
+        //         archiveArtifacts artifacts: 'result.txt', fingerprint: true
+        //     }
+        // }
         stage('Approval') {
             steps {
                 input "Do you want to proceed with deployment?"
@@ -52,10 +57,10 @@ pipeline {
         }
         failure {
             echo '❌ Pipeline failed. Check logs!'
+            sh 'exit 1'
         }
         always {
             echo 'Pipeline completed (success or failure).'
-            sh 'exit 1'
         }
     }
 }
