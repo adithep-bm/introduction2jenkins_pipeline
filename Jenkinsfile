@@ -33,13 +33,13 @@ pipeline {
         }
         stage('Simulate testing') {
             parallel {
-                state('Linux') {
+                stage('Linux') {
                     steps {
                         echo 'Simulating tests on Linux...'
                         sh 'sleep 5'
                     }
                 }
-                state('Windows') {
+                stage('Windows') {
                     steps {
                         echo 'Simulating tests on Windows...'
                         sh 'sleep 5'
