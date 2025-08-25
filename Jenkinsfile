@@ -10,7 +10,7 @@ pipeline {
                 echo 'Building application...'
             }
         }
-        state('Test in Parallel') {
+        stage('Test in Parallel') {
             parallel{
                 stage('Unit Tests') {
                     steps {
