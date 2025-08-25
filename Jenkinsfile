@@ -10,14 +10,14 @@ pipeline {
             steps {
                 echo 'Running tests...'
                 sleep 5
+                script {
+                    ls -l
+                }
             }
         }
         stage('Deploy') {
             steps {
                 echo 'Deploying the application...'
-                script {
-                    ls -l
-                }
             }
         }
     }
