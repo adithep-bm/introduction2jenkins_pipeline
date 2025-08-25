@@ -14,9 +14,9 @@ pipeline {
         stage('Test in Parallel') {
             parallel{
                 stage('Unit Tests') {
-                    when {
-                        expression { currentBuild.currentResult == 'SUCCESS' }
-                    }
+                    // when {
+                    //     expression { currentBuild.currentResult == 'SUCCESS' }
+                    // }
                     steps {
                         echo 'Running unit tests...'
                         sh 'sleep 5'
