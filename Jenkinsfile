@@ -1,21 +1,18 @@
 pipeline {
     agent any
     parameters {
-        booleanParam(name: 'BUILD_SUCCESSFULLY')
-        booleanParam(name: 'RUN_DEPLOY', defaultValue: false, 
-        description: 'Should we deploy?')
+        // booleanParam(name: 'RUN_DEPLOY', defaultValue: false, 
+        // description: 'Should we deploy?')
     }
     stages {
         stage('Build') {
             steps {
                 echo 'Building application...'
-                script {params.BUILD_SUCCESSFULLY = true}
+                boolean buildPassed = false        
             }
         }
         stage('Test in Parallel') {
-            when {
-                expression { return params.BUILD_SUCCESSFULLY }
-            }
+            if (buildPassed) {
             parallel{
                 stage('Unit Tests') {
                     steps {
@@ -30,6 +27,7 @@ pipeline {
                     }
                 }
             }
+            }
         }
         // stage('Test') {
         //     steps {
@@ -43,9 +41,6 @@ pipeline {
             }
         }
         stage('Deploy') {
-            when {
-                expression { return params.RUN_DEPLOY }
-            }
             steps{
                 echo 'Deploying application...'
             }
