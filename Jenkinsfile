@@ -48,7 +48,7 @@ pipeline {
             }
         }
         stage('Approval') {
-            option {
+            options {
                 timeout(time: 1, unit: 'SECONDS')
             }
             steps {
