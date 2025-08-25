@@ -8,7 +8,6 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building application...'
-                boolean buildPassed = false        
             }
         }
         stage('Test in Parallel') {
