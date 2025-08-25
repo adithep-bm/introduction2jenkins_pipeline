@@ -15,7 +15,9 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying the application...'
-                ls -l
+                script {
+                    ls -l
+                }
             }
         }
     }
