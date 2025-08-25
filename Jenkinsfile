@@ -1,9 +1,9 @@
 pipeline {
     agent any
-    // parameters {
-         // booleanParam(name: 'RUN_DEPLOY', defaultValue: false, 
-         // description: 'Should we deploy?')
-    // }
+    parameters {
+         booleanParam(name: 'BUILD_SUCCESS', defaultValue: true, 
+         description: 'Is Build successfully?')
+    }
     stages {
         stage('Build') {
             steps {
@@ -14,9 +14,9 @@ pipeline {
         stage('Test in Parallel') {
             parallel{
                 stage('Unit Tests') {
-                    // when {
-                    //     expression { currentBuild.currentResult == 'SUCCESS' }
-                    // }
+                    when {
+                        expression { return params.BUILD_SUCCESS }
+                    }
                     steps {
                         echo 'Running unit tests...'
                         sh 'sleep 5'
