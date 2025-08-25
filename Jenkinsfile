@@ -1,14 +1,13 @@
 pipeline {
     agent any
     parameters {
-         booleanParam(name: 'BUILD_SUCCESS', defaultValue: true, 
+         booleanParam(name: 'BUILD_SUCCESS', defaultValue: false, 
          description: 'Is Build successfully?')
     }
     stages {
         stage('Build') {
             steps {
                 echo 'Building application...'
-                // sh 'exit 1'
             }
         }
         stage('Test in Parallel') {
