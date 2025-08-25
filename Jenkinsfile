@@ -8,7 +8,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building application...'
-                sh 'exit 1'
+                // sh 'exit 1'
             }
         }
         stage('Test in Parallel') {
