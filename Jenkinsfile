@@ -9,6 +9,7 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Running tests...'
+                sleep 5
             }
         }
         stage('Deploy') {
@@ -16,5 +17,13 @@ pipeline {
                 echo 'Deploying the application...'
             }
         }
+    }
+}
+post {
+    success {
+        echo 'Pipeline completed successfully 🎉'
+    }
+    failure {
+        echo 'Pipeline failed ❌'
     }
 }
