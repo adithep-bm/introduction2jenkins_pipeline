@@ -32,6 +32,11 @@ pipeline {
                 archiveArtifacts artifacts: 'result.txt', fingerprint: true
             }
         }
+        stage('Approval') {
+            steps {
+                input "Do you want to proceed with deployment?"
+            }
+        }
         stage('Deploy') {
             when {
                 expression { return params.RUN_DEPLOY }
