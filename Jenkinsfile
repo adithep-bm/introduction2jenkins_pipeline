@@ -1,9 +1,9 @@
 pipeline {
     agent any
-    parameters {
-        // booleanParam(name: 'RUN_DEPLOY', defaultValue: false, 
-        // description: 'Should we deploy?')
-    }
+    // parameters {
+         // booleanParam(name: 'RUN_DEPLOY', defaultValue: false, 
+         // description: 'Should we deploy?')
+    // }
     stages {
         stage('Build') {
             steps {
@@ -11,7 +11,6 @@ pipeline {
             }
         }
         stage('Test in Parallel') {
-            if (buildPassed) {
             parallel{
                 stage('Unit Tests') {
                     steps {
@@ -25,7 +24,6 @@ pipeline {
                         sh 'sleep 5'
                     }
                 }
-            }
             }
         }
         // stage('Test') {
